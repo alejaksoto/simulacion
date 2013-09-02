@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Simulaciones</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/datepicker.css">
+	<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script type="text/javascript" src="js/underscore-min.js"></script>
+	<script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
+	<script type="text/javascript" src="js/date.js"></script>
+	<script type="text/javascript" src="js/simulaciones.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+		window.table = _.template("<tr><td><%- hora %></td><td><%- venta %></td><td><%- vendidas %></td><td><%- nosepudovender %></td><td><%- ganancia_real %></td><td><%- costos_real %></td><td><%- perdida_real %></td><td><%- panes %></td><td><%- hamburguesas %></td></tr>");
+
+		google.load("visualization", "1", {packages:["corechart"]});
+		$(document).ready(function(){
+			$("#simular").on("click",function(){
+				var bmd = bigMadDoc;
+				bmd.run($("#data tbody"),{});
+				drawChart();
+			});
+			function drawChart() {
+				var data = google.visualization.arrayToDataTable(window.graf.obj);
+
+				var options = {
+				  title: window.graf.tittle
+				};
+
+				var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+				chart.draw(data, options);
+			}
+		});
+	</script>
+	<style type="text/css">
+	 #data{
+	 	font-size: 14px;
+	 }
+	 .lead{
+	 	font-size: 14px;
+	 	text-align: justify;
+	 }
+	</style>
+</head>
+<body>
+    <div class="container">
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+        <h3 class="text-muted">Project name</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Simulacion de Cadena de Comida</h1>
+        <p class="lead">La cadena de Fast Food McDowel's desea abrir una sucursal en el barrio de Palermo. El objetivo es maximizar el beneficio. Para ello, atendera de lunes a lunes a sus clientes sin excepcion.De acuerdo a un estudio de mercado 	uw lw hizo la agencia MarketSearching & Asoc, la cantidad vendida por hora seria entre 20 y 30 (equiprobablemmente). La especialidad del ligar es eñ BigMAcD,, que esta compuesto por 3 panes y dos hamburguesas con una exquisita salsa cuya receta es un secreto de la casa. Ademas puede tener lechuga y tomate opcional si cargo. Por cada BigmacD que vende gana $4. Los BigMacD que no se venden, se desechan ala final del dia, lo cual tiene un costo de $0.04 por cada pan y de $0.1 por cada hamburguesa. 
+        	El costo de la lechuga y tomate es despreciable,  Si se quedan sin mercaderia para vender les genera un costo de $3 por cada BigMacD (promocion local) Cada mañana a las 6hs llega el camion para reponer el stock del dia con una cantidad fija . El gran dilema es ¿Cuantos BigMAcD deberai terner el local para vender en el dia.</p>
+        <div id="chart_div"></div>
+        <table id="data" class="table table-striped">
+        	<thead>
+        		<tr>
+        			<th>Hora</th><th>Pedido</th><th>Venta</th><th>Venta Perdi</th><th>Ganancia</th><th>Costo</th><th>Perdidas</th><th>Panes</th><th>Hambur</th>
+        		</tr>
+        	</thead>
+        	<tbody>
+        		
+        	</tbody>
+
+        </table>
+        <p><a class="btn btn-lg btn-success" href="#" id="simular">Simular</a></p>
+      </div>
+      <div class="footer">
+        <p>&copy; Grupo No 1</p>
+      </div>
+
+    </div>
+</body>
+</html>

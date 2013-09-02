@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Simulaciones</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/datepicker.css">
+	<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script type="text/javascript" src="js/underscore-min.js"></script>
+	<script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
+	<script type="text/javascript" src="js/date.js"></script>
+	<script type="text/javascript" src="js/simulaciones.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+		window.table = _.template("<tr><td><%- hora %></td><td><%- granos %></td><td><%- come %></td><td><%- desperdicio %></td></tr>");
+
+		google.load("visualization", "1", {packages:["corechart"]});
+		$(document).ready(function(){
+			$("#simular").on("click",function(){
+				var gr = granja;
+				gr.run($("#data tbody"),{tamanio: $("#tamanio"),recambio: $("#recambio")});
+				debugger;
+				drawChart();
+			});
+			function drawChart() {
+				var data = google.visualization.arrayToDataTable(window.graf.obj);
+
+				var options = {
+				  title: window.graf.tittle
+				};
+
+				var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+				chart.draw(data, options);
+			}
+		});
+	</script>
+	<style type="text/css">
+	 #data{
+	 	font-size: 14px;
+	 }
+	 .lead{
+	 	font-size: 14px;
+	 	text-align: justify;
+	 }
+	</style>
+</head>
+<body>
+    <div class="container">
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+        <h3 class="text-muted">Project name</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Simulacion de Granos</h1>
+        <p class="lead"> Una granja desea realizar una simulacion sobre el sistema de alimentacion que poseen las gallinas. Cada una tiene en su corral un tubo en el que van callendo los granos de maiz. Cada una de las cantidades es constante de obras efectuando el recambio del tubo por uno lleno, los granos que quedaron en el recipiente anterior se desechan por considerados en mal estado. Se conoce la necesidad de alimentos de las gallinas que responden a una f.d.p equiprobable entre 10 y 30 por hora. 
+        	Se desea saber cual es el tamaño de los tubos y la cantidad de horas para el recambio que minimice la cantidad de desperdicio de granos.</p>
+        <div id="chart_div"></div>
+        <table id="data" class="table table-striped">
+        	<thead>
+        		<tr>
+        			<th>Hora</th><th>Granos</th><th>Come</th><th>Desperdicio</th>
+        		</tr>
+        	</thead>
+        	<tbody>
+        		
+        	</tbody>
+
+        </table>
+        <p>
+        	<input id="tamanio" placeholder="Tamaño (Gramos)">
+        	<input id="recambio" placeholder="Recambio (horas)" type="text">
+        </p>
+        <p><a class="btn btn-lg btn-success" href="#" id="simular">Simular</a></p>
+      </div>
+      <div class="footer">
+        <p>&copy; Grupo No 1</p>
+      </div>
+
+    </div>
+</body>
+</html>

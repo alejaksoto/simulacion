@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Simulaciones</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script type="text/javascript" src="js/underscore-min.js"></script>
+	<script type="text/javascript" src="js/simulaciones.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+		window.table = _.template("<tr><td><%- segundos %></td><td><%- nacimiento %></td><td><%- muerte %></td><td><%- microbios %></td><td><%- microbiosAntesM %></td><td><%- microbiosDespuesM %></td><td><%- m %></td></tr>");
+
+		google.load("visualization", "1", {packages:["corechart"]});
+		$(document).ready(function(){
+			$("#simular").on("click",function(){
+				var lol = micro
+				lol.run($("#data tbody"));
+				debugger;
+				drawChart();
+			});
+			function drawChart() {
+				debugger;
+				var data = google.visualization.arrayToDataTable(window.graf.obj);
+
+				var options = {
+				  title: window.graf.tittle
+				};
+
+				var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+				chart.draw(data, options);
+			}
+		});
+	</script>
+	<style type="text/css">
+	 #data{
+	 	font-size: 14px;
+	 }
+	 .lead{
+	 	font-size: 14px;
+	 	text-align: justify;
+	 }
+	</style>
+</head>
+<body>
+    <div class="container">
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+        <h3 class="text-muted">Project name</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Simulacion de Microbios</h1>
+        <p class="lead">Un laboratorio se encuentra estudiando el comportamiento de un microbio el cual se reproduce en un medio acuoso. El microbio se reproduce en una cantidad expreda por una fdp (entre 1000 y 3000), por segundo, y se combate con una droga denominada M. La cantidad de droga M que se deberia emplear por segundo, es lo que se intenta determinar. Se sabe  que por cada unidad de M muera 10 microbios. El microbio tambien puede morir por haber cumplido su ciclo de vida, esto se produce por una fdp expresada en segundos (fdp equiprobable entre 500 y 25000). se desea calcular cual fue la cantidad maxima de microbios que hubo en el medio acuoso a lo largo de la simulacion y el promedio de microbios que murieron por haber cumplido su ciclo de vida respecto de la totalidad de las muertes.</p>
+        <div id="chart_div"></div>
+        <table id="data" class="table table-striped">
+        	<thead>
+        		<tr>
+        			<th>Segundos</th><th>Nacimiento</th><th>Muerte</th><th>Microbios</th><th title="Microbios antes de M">Ant M</th><th title="Microbios despues de M">Desp M</th><th>Cantidad de M</th>
+        		</tr>
+        	</thead>
+        	<tbody>
+        		
+        	</tbody>
+
+        </table>
+        <p><a class="btn btn-lg btn-success" href="#" id="simular">Simular</a></p>
+      </div>
+      <div class="footer">
+        <p>&copy; Grupo No 1</p>
+      </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Simulaciones</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script type="text/javascript" src="js/underscore-min.js"></script>
+	<script type="text/javascript" src="js/simulaciones.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+		window.table = _.template("<tr><td><%- dia %></td><td><%- ladrillos %></td><td><%- peticion %></td><td><%- daniodia %></td><td><%- ladrifin %></td></tr>");
+
+		google.load("visualization", "1", {packages:["corechart"]});
+		$(document).ready(function(){
+			$("#simular").on("click",function(){
+				var construc = contructora;
+				construc.run($("#data tbody"));
+				debugger;
+				drawChart();
+			});
+			function drawChart() {
+				var data = google.visualization.arrayToDataTable(window.graf.obj);
+
+				var options = {
+				  title: window.graf.tittle
+				};
+
+				var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+				chart.draw(data, options);
+			}
+		});
+	</script>
+	<style type="text/css">
+	 #data{
+	 	font-size: 14px;
+	 }
+	 .lead{
+	 	font-size: 14px;
+	 	text-align: justify;
+	 }
+	</style>
+</head>
+<body>
+    <div class="container">
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+        <h3 class="text-muted">Project name</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Simulacion de Venta de Energia</h1>
+        <p class="lead">Una empresa contructora recibe en su nueva obra en forma diaria una cantidad constante de ladrillos. La cantidad de ladrillos que se utilizan en la obra dependen entre otros factores de la cantidad de obreros que se presente a trabajar ese dia, esa cantidad responde a un fdp. Diariamente se dañan 5% de los ladrillos existentes  por rotura(no sirven). Ademas, como hay otra obra cercana, de la misma empresa, existe un 20% de probabilidad que un dia vengan a retirar ladrillos, en este cado solo se entregan hasta un 1000(uniforme). En caso de no contar con los ladrillos suficientes para trabajar  ese dia se pierde $1.500 diarios, por ese motivo se desea ajustar la cantidad de ladrillos a pedir para minimizar el costo por no tenerlos.</p>
+        <div id="chart_div"></div>
+        <table id="data" class="table table-striped">
+        	<thead>
+        		<tr>
+        			<th>Dia</th><th>Ladrillos</th><th>Peticion</th><th>Daño</th><th title="Costo Extra">Ladrillos al Final del dia</th>
+        		</tr>
+        	</thead>
+        	<tbody>
+        		
+        	</tbody>
+
+        </table>
+        <p><a class="btn btn-lg btn-success" href="#" id="simular">Simular</a></p>
+      </div>
+      <div class="footer">
+        <p>&copy; Grupo No 1</p>
+      </div>
+
+    </div>
+</body>
+</html>

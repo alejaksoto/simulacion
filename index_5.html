@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Simulaciones</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/datepicker.css">
+	<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script type="text/javascript" src="js/underscore-min.js"></script>
+	<script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
+	<script type="text/javascript" src="js/date.js"></script>
+	<script type="text/javascript" src="js/simulaciones.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+		window.table = _.template("<tr><td><%- dia %></td><td><%- cant_barc %></td><td><%- cant_camiones %></td><td><%- silo %></td><td><%- carga_barco %></td><td><%- sale %></td></tr>");
+
+		google.load("visualization", "1", {packages:["corechart"]});
+		$(document).ready(function(){
+			$("#simular").on("click",function(){
+				var sil = silo;
+				sil.run($("#data tbody"),{fecha: $("#fecha"),ndias: $("#ndias")});
+				debugger;
+				drawChart();
+			});
+			function drawChart() {
+				var data = google.visualization.arrayToDataTable(window.graf.obj);
+
+				var options = {
+				  title: window.graf.tittle
+				};
+
+				var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+				chart.draw(data, options);
+			}
+		});
+	</script>
+	<style type="text/css">
+	 #data{
+	 	font-size: 14px;
+	 }
+	 .lead{
+	 	font-size: 14px;
+	 	text-align: justify;
+	 }
+	</style>
+</head>
+<body>
+    <div class="container">
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+        <h3 class="text-muted">Project name</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Simulacion de Almacenaje de Silo</h1>
+        <p class="lead">Se desea disimular el proceso de almacenaje de granos en una terminal portuaria, la misma tiene un silo de almacenaje, el cual es abastecido por los barcos que anclan en la terminal. El silo tiene una capacidad maxima de 20.000 M, si la cantidad de granos supera al maximo del silo, el excedente es desechado.
+       	Los barcos que anclan en la terminal descargan generalmente una cantidad de granos que es equiprobable ente 2000 y 4000 m por barco, los dias de semana descargan 5 barcos simultaneamente por dia, mientras que en el fin de semana solo lo pueden hacer 3 barcos por dia  debido a que disminuyen la cantidad de operarios. 
+       	Luego de que los granos se encuentran en el silo los camiones de transporte los envian  a las respectivas empresas compradoras, cada camion transporta 1000 m y realizar el translado de insume todo el dia. 
+       	El motivo de la simulacion es daber que porcentaje de granos se desperdician dado que el silo esta totalmente lleno, para el ajuste de la cantidad de camiones de despacho. </p>
+        <div id="chart_div"></div>
+        <table id="data" class="table table-striped">
+        	<thead>
+        		<tr>
+        			<th>Dia</th><th>Cantida Barcos</th><th>Cantidad Camiones</th><th>Silo</th><th>Sale</th><th>Silo Final</th>
+        		</tr>
+        	</thead>
+        	<tbody>
+        		
+        	</tbody>
+
+        </table>
+        <p>
+        	<input id="fecha" class="datepicker">
+        	<input id="ndias" placeholder="Numero de Dias a Simular" type="text">
+        	<script type="text/javascript">
+        		$('.datepicker').datepicker()
+        	</script>
+        </p>
+        <p><a class="btn btn-lg btn-success" href="#" id="simular">Simular</a></p>
+      </div>
+      <div class="footer">
+        <p>&copy; Grupo No 1</p>
+      </div>
+
+    </div>
+</body>
+</html>
