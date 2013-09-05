@@ -35,7 +35,11 @@ var micro = {
 		this.initial();
 		table_target.html("");
 		while(true){
-			this.cicloVida();
+			if(this.segundos == 0){
+				this.nacimiento();
+			}else{
+				this.cicloVida();
+			}
 			this.apliM(this.m);
 			window.graf.obj.push([String(this.segundos),this.naci,this.muerte,this.microbios,this.after,this.before,this.m]);
 			table_target.append(window.table({segundos: this.segundos,nacimiento: this.naci,muerte: this.muerte,microbios: this.microbios, microbiosAntesM: this.after, microbiosDespuesM: this.before, m: this.m}));
